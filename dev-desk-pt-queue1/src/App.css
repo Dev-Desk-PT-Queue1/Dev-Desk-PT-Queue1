@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.main-header {
+  display: flex;
+}
+
+.sub-header {
+  width: 100%;
+  background: #2f2b4a;
+  color: white;
+}
+
+.deskLogo {
+  height: 20vh;
+  width: auto;
+}
