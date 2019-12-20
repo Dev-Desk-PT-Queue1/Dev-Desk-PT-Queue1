@@ -1,94 +1,93 @@
-import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
+import React from 'react';
 
-const NewTicketForm = () => {
-    const [ticketForm, setTicketForm] = useState({
-        name: '',
-        title: '',
-        description: '',
-        tried: [],
-        category: ''
-    });
-    const [inputArray, setInputArray] = useState([]);
-    const [forceupdate, setForce] = useState();
-    const [tried, setTried] = useState([]);
+class NewTicketFormClass extends React.Component {
+    constructor(props) {
+        super(props);
 
-    /** Function to add a input field each time the user clicks a button */
-    function displayAttempts(){
-        const inputs = inputArray.concat(DocumentInput);
-        setInputArray(inputs);
+        this.state = {
+            data : {
+                name: '',
+                title: '',
+                description: '',
+                tried: [],
+                category: ''
+            },
+            inputArray: []
+        };
     }
 
-    function handleChange(event){
-        let newObject = ticketForm;
-        for(const prop in newObject){
+
+    displayAttempts(){
+        const inputs = this.state.inputArray.concat(DocumentInput);
+        let data = this.state;
+        data.inputArray = inputs;
+        this.setState(data);
+    }
+
+    handleChange(event){
+        let newObject = this.state;
+        for(const prop in newObject.data){
             if(prop === event.target.id){
-                newObject[prop] = event.target.value;
-                console.log(event.target.value);
+                newObject.data[prop] = event.target.value;
                 console.log(newObject);
             }
         }
-        setTicketForm(newObject);
-        setForce(!forceupdate);
+        this.setState(newObject);
     }
 
-    function handleSubmit(event){
+    handleSubmit(event){
         event.preventDefault();
-        let form = ticketForm;
-        form.tried = tried;
-        setTicketForm(form);
-        console.log(ticketForm);
+        console.log(this.state);
     }
 
-    return (
-        <form onSubmit={handleSubmit}>
+    render() {
+        return (
+            <form onSubmit={e => this.handleSubmit(e)}>
             Name: <input 
                 type="text"
                 id="name"
-                value={ticketForm.name}
-                onChange={handleChange}
+                value={this.state.data.name}
+                onChange={e => this.handleChange(e)}
             />
             Title: <input 
                 type="text"
                 id="title"
-                value={ticketForm.title}
-                onChange={handleChange}
+                value={this.state.data.title}
+                onChange={e => this.handleChange(e)}
             />
             Desc: <input 
                 type="text"
                 id="description"
-                value={ticketForm.description}
-                onChange={handleChange}
+                value={this.state.data.description}
+                onChange={e => this.handleChange(e)}
             />
             <button 
                 type="button"
                 id="add items"
                 value="Add things you have tried"
-                onClick={displayAttempts}
+                onClick={e => this.displayAttempts()}
             > Add Tried Solutions </button>
-            {inputArray.map((Element, index) => {
-                return <Element id={index} index={index} tried={tried} setTried={setTried} />
+            {this.state.inputArray.map((Element, index) => {
+                return <Element id={index} index={index} tried={this.state} setTried={this.setState.bind(this)} />
             })}
             Category: <input 
                 type="text"
                 id="category"
-                value={ticketForm.category}
-                onChange={handleChange}
+                value={this.state.data.category}
+                onChange={e => this.handleChange(e)}
             />
             <button
                 type="submit"
             >Submit</button>
         </form>
-    );
-};
+        );
+    }
+}
 
 const DocumentInput = (props) => {
-    
     function handleChange(event){
         let array = props.tried;
-        console.log(array);
-        array[props.index] = event.target.value;
-        console.log(array);
+        array.data.tried[props.index] = event.target.value;
         props.setTried(array);
     }
 
@@ -100,5 +99,4 @@ const DocumentInput = (props) => {
             />
 }
 
-
-export default NewTicketForm;
+export default NewTicketFormClass;
