@@ -16,13 +16,8 @@ class NewTicketFormClass extends React.Component {
             inputArray: []
         };
     }
-<<<<<<< Updated upstream
-    /** add's an attempt field to the existing inputArray in state */
-    addAttempts(){
-=======
 
-    displayAttempts(){
->>>>>>> Stashed changes
+    addAttempts(){
         const inputs = this.state.inputArray.concat(DocumentInput);
         let data = this.state;
         data.inputArray = inputs;
