@@ -10,21 +10,24 @@ class Helper extends Component {
                 description: 'dsad',
                 name: 'nate',
                 title: 'react',
-                tried: ['Debugging', 'Throwing head against wall']
+                tried: ['Debugging', 'Throwing head against wall'],
+                assigned: 'somehash'
             },
             {
                 catgeory: 'react',
                 description: 'dsad',
                 name: 'John',
                 title: 'react',
-                tried: ['Debugging', 'Throwing head against wall']
+                tried: ['Debugging', 'Throwing head against wall'],
+                assigned: 'somehash'
             },
             {
                 catgeory: 'react',
                 description: 'dsad',
                 name: 'Jeff',
                 title: 'react',
-                tried: ['Debugging', 'Throwing head against wall']
+                tried: ['Debugging', 'Throwing head against wall'],
+                assigned: 'somehash'
             }
         ],
             available: [
@@ -33,35 +36,40 @@ class Helper extends Component {
                     description: 'dsad',
                     name: 'sam',
                     title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall']
+                    tried: ['Debugging', 'Throwing head against wall'],
+                    id: 6
                 },
                 {
                     catgeory: 'react',
                     description: 'dsad',
                     name: 'katie',
                     title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall']
+                    tried: ['Debugging', 'Throwing head against wall'],
+                    id: 7
                 },
                 {
                     catgeory: 'react',
                     description: 'dsad',
                     name: 'mark',
                     title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall']
+                    tried: ['Debugging', 'Throwing head against wall'],
+                    id: 8
                 },
                 {
                     catgeory: 'react',
                     description: 'dsad',
                     name: 'ben',
                     title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall']
+                    tried: ['Debugging', 'Throwing head against wall'],
+                    id: 9
                 },
                 {
                     catgeory: 'react',
                     description: 'dsad',
                     name: 'Lucas',
                     title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall']
+                    tried: ['Debugging', 'Throwing head against wall'],
+                    id: 10
                 }
             ]
         }
@@ -99,19 +107,57 @@ class Helper extends Component {
        ))
     }
 
-    renderAvailable(){
+    addTicket(ticket){
+        let newAvailable = this.state.available.filter(obj => !(ticket === obj))
+        let newAssigned = this.state.assigned;
+        newAssigned.push(ticket);
+        this.setState({assigned: newAssigned, available: newAvailable })
+         
+    }
+
+    markAsDone(){
 
     }
 
-    refreshAvailable(){
+    renderAvailable(){
+        return this.state.available.map(values => (
+            <div> <b>Name:</b> {values.name} 
+                <ul>
+                    <li> Category: {values.catgeory} </li>
+                    <li> Description: {values.description} </li>
+                    <li> Title: {values.title} </li>
+                    {values.tried.map(answer => 
+                        <li> {answer} </li>
+                    )}
+                </ul>
+                <button onClick={() => this.addTicket(values)}> Add Ticket </button>
+        </div>
+       ))
+    }
 
+    refreshAvailable(){
+        /*Axios.get(`backendapi.com/tickets?id=${helperiD}?number=5`)
+            .then(res =>{
+                this.setState({assinged: this.state.assigned, available: res});
+            })
+            .catch(err =>{
+                console.log(err);
+            })*/
     }
 
     render() {
         return (
-            <div>
-                {this.renderAssigned()}
-            </div>
+            <>
+                <div className="tickets">
+                    <div className="assignedTickets">
+                        {this.renderAssigned()}
+                    </div>
+                    <div className="availableTickets">
+                        {this.renderAvailable()}
+                    </div>
+                </div>
+                <button onClick={this.refreshAvailable()}> Get New Tickets! </button>
+            </>
         );
     }
 }
