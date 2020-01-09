@@ -103,6 +103,7 @@ class Helper extends Component {
                         <li> {answer} </li>
                     )}
                 </ul>
+                <button onClick={() => this.markAsDone(values)}> Mark As Done </button>
         </div>
        ))
     }
@@ -115,8 +116,9 @@ class Helper extends Component {
          
     }
 
-    markAsDone(){
-
+    markAsDone(ticket){
+        let newAssigned = this.state.assigned.filter(obj => !(ticket === obj))
+        this.setState({assigned: newAssigned, available: this.state.available})
     }
 
     renderAvailable(){

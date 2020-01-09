@@ -2,6 +2,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import Helper from './Helper';
+import User from './User';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -16,13 +17,12 @@ class Dashboard extends React.Component {
         switch(user){
             case 'Helper':
                 return(
-                    <Helper></Helper>
+                    <Helper/>
                 )
             break;
             case 'User': 
                 return (
-                    <>
-                    </>
+                    <User/>
                 )
             break;
         }
@@ -30,7 +30,7 @@ class Dashboard extends React.Component {
 
     render() {
         return (
-            this.handleView('Helper')
+            this.handleView('User')
         );
     }
 }
