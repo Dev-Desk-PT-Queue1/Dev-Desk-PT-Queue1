@@ -1,4 +1,4 @@
-import React, { component } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { LoginForm, LoginHeader } from '../helpers';
@@ -19,7 +19,7 @@ class Login extends Component {
   
     login = e => {
       e.preventDefault();
-      this.props.login(this.state.credentials).then(() => {
+        this.props.login(this.state.credentials).then(() => {
         setTimeout(() => {
           this.props.history.push("/tickets");
         }, 1485);
@@ -40,7 +40,6 @@ class Login extends Component {
         <div>
           <LoginHeader>
             <img
-              src={require(`../img/Lambda_Avatar_Red.jpg`)}
               alt="Lambda Avatar"
             />
             <h1>Lambda School</h1>

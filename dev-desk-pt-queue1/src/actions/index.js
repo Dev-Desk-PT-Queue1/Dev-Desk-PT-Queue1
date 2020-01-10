@@ -31,7 +31,7 @@ export const login = credentials => dispatch => {
             }
         })
        .catch(err => {
-           if(err.response.status === 500 || res.response.status === 404) {
+           if(err.response.status === 500 /*|| res.response.status === 404*/) {
                dispatch({
                    type: LOGIN_FAIL,
                    payload: err.response.data.msg,
