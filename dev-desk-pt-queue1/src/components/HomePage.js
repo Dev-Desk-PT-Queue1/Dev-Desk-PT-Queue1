@@ -1,11 +1,18 @@
 import React from "react";
-import { TicketH1 } from "../helpers/index";
+import Login from './Login';
+
+import Header from './Header';
+import Footer from './Footer';
 
 
-export default () => {
+const HomePage = () => {
   return (
     <div>
-      <h1>HomePage Place Holder</h1>
+      <Header />
+      <Login />
+      <Footer />
     </div>
   );
 };
+
+export default HomePage;

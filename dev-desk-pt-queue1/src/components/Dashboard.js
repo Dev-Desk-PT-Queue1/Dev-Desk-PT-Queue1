@@ -3,6 +3,9 @@ import React from 'react';
 import propTypes from 'prop-types';
 import Helper from './Helper';
 
+import Header from './Header';
+import Footer from './Footer';
+
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -16,7 +19,11 @@ class Dashboard extends React.Component {
         switch(user){
             case 'Helper':
                 return(
-                    <Helper></Helper>
+                    <>
+                        <Header/ >
+                        <Helper/ >
+                        <Footer/ >
+                    </>
                 )
             break;
             case 'User': 

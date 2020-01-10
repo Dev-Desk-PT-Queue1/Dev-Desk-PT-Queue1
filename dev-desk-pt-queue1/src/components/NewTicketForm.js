@@ -1,21 +1,34 @@
-import React from 'react';
-import axios from 'axios';
+import React, { Component } from 'react';
+// import axios from 'axios';
+import { connect } from 'react-redux'
+import { addTicket } from '../actions';
+import Dashboard from './Dashboard';
 
-class NewTicketFormClass extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data : {
-                name: '',
+class NewTicketFormClass extends Component {
+    
+        state = {
+            ticket: {
+                user_id: '',
                 title: '',
                 description: '',
-                tried: [],
-                category: ''
+                tried: '',
+                category: '',
+                created_at: '',
+                resolved: false, 
+                assigned: false
             },
             inputArray: []
         };
-    }
+
+        handleChange = e => {
+            this.setState({
+                ticket: {
+                    ...this.state.ticket,
+                    [e.target.name]: e.target.value
+                }
+            });
+        };
+    
 
     addAttempts(){
         const inputs = this.state.inputArray.concat(DocumentInput);
@@ -31,45 +44,43 @@ class NewTicketFormClass extends React.Component {
         data.inputArray = inputs;
         this.setState(data);
     }
-    /** 
-     * handles when form data input gets changed for any of the input fields in form
-     * @param {React.ChangeEvent<HTMLInputElement>} event - The event called on change
-     */
-    handleChange(event){
-        let newObject = this.state;
-        for(const prop in newObject.data){
-            if(prop === event.target.id){
-                newObject.data[prop] = event.target.value;
-                console.log(newObject);
-            }
-        }
-        this.setState(newObject);
-    }
-    /**
-     * Handles form submission
-     * @param {React.FormEvent<HTMLFormEvent>} event - The event called on change
-     */
-    handleSubmit(event){
-        event.preventDefault();
-        console.table(this.state);
-        axios.post(`some_api`)
-            .then(res => {
-                console.log('Submitted Succesfully');
+    // /** 
+    //  * handles when form data input gets changed for any of the input fields in form
+    //  * @param {React.ChangeEvent<HTMLInputElement>} event - The event called on change
+    //  */
+    // // handleChange(event){
+    //     let newObject = this.state;
+    //     for(const prop in newObject.data){
+    //         if(prop === event.target.id){
+    //             newObject.data[prop] = event.target.value;
+    //             console.log(newObject);
+    //         }
+    //     }
+    //     this.setState(newObject);
+    // }
+    // /**
+    //  * Handles form submission
+    //  * @param {React.FormEvent<HTMLFormEvent>} event - The event called on change
+    //  */
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.addTicket(this.state.ticket);
+        this.props.history.push(`/tickets`);
                 this.setState({
                     data : {
-                        name: '',
+                        user_id: '',
                         title: '',
                         description: '',
-                        tried: [],
-                        category: ''
+                        tried: '',
+                        category: '',
+                        created_at: '',
+                        resolved: false, 
+                        assigned: false
                     },
                     inputArray: []
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+                });
+            };
+            
 
     render() {
         return (
@@ -144,4 +155,17 @@ const DocumentInput = (props) => {
     )
 }
 
-export default NewTicketFormClass;
+// export default NewTicketFormClass;
+
+const mapStateToProps = state => {
+    return {
+      tickets: state.tickets,
+      user: state.user,
+      categories: state.categories
+    };
+  };
+  
+  export default connect(
+    mapStateToProps,
+    { NewTicketFormClass }
+  )(NewTicketFormClass);
