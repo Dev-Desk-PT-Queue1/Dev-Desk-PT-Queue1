@@ -123,5 +123,59 @@ export const addTicket = newTicket => dispatch => {
     });
 };
 
+// Action to Delete
+
+export const DELETE_TICKET_START = "DELETE_TICKET_START";
+export const DELETE_TICKET_SUCCESS = "DELETE_TICKET_SUCCESS";
+export const DELETE_TICKET_FAIL = "DELETE_TICKET_FAIL";
+
+export const deleteTicket = id => 
+    dispatch => {
+        dispatch({ 
+        type: DELETE_TICKET_START 
+        });
+    axiosAuth()
+        .delete(`https://dev-desk-queue.herokuapp.com/api/tickets/${id}`)
+        .then(res => {
+        dispatch({
+            type: DELETE_TICKET_SUCCESS,
+            payload: res.data
+        });
+        })
+        .catch(err => {
+        dispatch({ 
+            type: DELETE_TICKET_FAIL, 
+            payload: 
+            err.response 
+        });
+        });
+    };
+
+    //Action for for helpers to resolve and 'unresolve' tickets
+
+export const RESOLVE_TICKET_START = "RESOLVE_TICKET_START";
+export const RESOLVE_TICKET_SUCCESS = "RESOLVE_TICKET_SUCCESS";
+export const RESOLVE_TICKET_FAIL = "RESOLVE_TICKET_FAIL";
+
+export const resolveTicket = (id, updatedTicket) => 
+    dispatch => {
+        dispatch({ 
+            type: RESOLVE_TICKET_START, 
+            id });
+        axiosAuth()
+            .put(
+            `https://dev-desk-queue.herokuapp.com/api/tickets/${id}`,
+            updatedTicket
+            )
+            .then(res => {
+            dispatch({ type: RESOLVE_TICKET_SUCCESS, payload: res.data, id });
+            })
+            .catch(err => {
+            dispatch({ type: RESOLVE_TICKET_FAIL, payload: err });
+            });
+    };
+
+
+
 
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux'
 import { addTicket } from '../actions';
-import Dashboard from './Dashboard';
+import Dashboard from './Dashboard/Dashboard';
 
 class NewTicketFormClass extends Component {
     
