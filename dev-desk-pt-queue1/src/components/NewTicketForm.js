@@ -54,13 +54,24 @@ class NewTicketFormClass extends React.Component {
         let data = Object.values(this.state.data);
         console.log(data);
         if(Object.values(this.state.data).includes('')){
+            alert('Fill out Forms');
             return;
+        }else{
+            this.setState({
+                data : {
+                    name: '',
+                    title: '',
+                    description: '',
+                    tried: [],
+                    category: ''
+                },
+                inputArray: []
+            })
+            console.table(this.state);
+            let tickets = this.props.ticketData.state.available;
+            tickets.push(this.state.data);
+            this.props.ticketData.setState({available: tickets});
         }
-        console.table(this.state);
-        let tickets = this.props.ticketData.state.available;
-        tickets.push(this.state.data);
-        this.props.ticketData.setState({available: tickets});
-        console.table(this.props);
         axios.post(`some_api`)
             .then(res => {
                 console.log('Submitted Succesfully');
