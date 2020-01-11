@@ -67,6 +67,7 @@ export const SFooter = styled.footer`
     .extra {
       margin-top: 1rem;
       text-align: center;
+      color: black;
     }
     .error {
       background: #fff6f6;
@@ -90,7 +91,6 @@ export const SFooter = styled.footer`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 4rem 0 1rem;
     img {
       width: 50px;
       height: 50px;

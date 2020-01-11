@@ -1,78 +1,10 @@
 import React, { Component } from 'react';
+import {Assigned, Block} from '../helpers/StyledUser';
 import Axios from 'axios';
 
 class Helper extends Component {
     constructor(props) {
         super(props);
-        this.state = { assigned: [
-            {
-                catgeory: 'react',
-                description: 'dsad',
-                name: 'nate',
-                title: 'react',
-                tried: ['Debugging', 'Throwing head against wall'],
-                assigned: 'somehash'
-            },
-            {
-                catgeory: 'react',
-                description: 'dsad',
-                name: 'John',
-                title: 'react',
-                tried: ['Debugging', 'Throwing head against wall'],
-                assigned: 'somehash'
-            },
-            {
-                catgeory: 'react',
-                description: 'dsad',
-                name: 'Jeff',
-                title: 'react',
-                tried: ['Debugging', 'Throwing head against wall'],
-                assigned: 'somehash'
-            }
-        ],
-            available: [
-                {
-                    catgeory: 'react',
-                    description: 'dsad',
-                    name: 'sam',
-                    title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall'],
-                    id: 6
-                },
-                {
-                    catgeory: 'react',
-                    description: 'dsad',
-                    name: 'katie',
-                    title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall'],
-                    id: 7
-                },
-                {
-                    catgeory: 'react',
-                    description: 'dsad',
-                    name: 'mark',
-                    title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall'],
-                    id: 8
-                },
-                {
-                    catgeory: 'react',
-                    description: 'dsad',
-                    name: 'ben',
-                    title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall'],
-                    id: 9
-                },
-                {
-                    catgeory: 'react',
-                    description: 'dsad',
-                    name: 'Lucas',
-                    title: 'react',
-                    tried: ['Debugging', 'Throwing head against wall'],
-                    id: 10
-                }
-            ]
-        }
     }
 
     componentDidMount() { //data that will be gotten from the 
@@ -93,48 +25,56 @@ class Helper extends Component {
     }
 
     renderAssigned(){
-        return this.state.assigned.map(values => (
-            <div> name: {values.name} 
-                <ul>
-                    <li> Category: {values.catgeory} </li>
-                    <li> Description: {values.description} </li>
-                    <li> Title: {values.title} </li>
-                    {values.tried.map(answer => 
-                        <li> {answer} </li>
-                    )}
-                </ul>
-                <button onClick={() => this.markAsDone(values)}> Mark As Done </button>
-        </div>
+        return this.props.state.assigned.map(values => (
+            <Assigned>
+                <Block> <b>Name:</b> {values.name} 
+                    <ul>
+                        <li> <b>Category:</b> {values.category} </li>
+                        <li> <b>Description:</b> {values.description} </li>
+                        <li> <b>Title:</b> {values.title} </li>
+                        <ul> <b>Tries:</b> 
+                            {values.tried.map(answer => 
+                                <li> {answer} </li>
+                            )}
+                        </ul>
+                    </ul>
+                    <button onClick={() => this.markAsDone(values)}> Mark As Done </button>
+                </Block>
+        </Assigned>
        ))
     }
 
     addTicket(ticket){
-        let newAvailable = this.state.available.filter(obj => !(ticket === obj))
-        let newAssigned = this.state.assigned;
+        let newAvailable = this.props.state.available.filter(obj => !(ticket === obj))
+        let newAssigned = this.props.state.assigned;
         newAssigned.push(ticket);
-        this.setState({assigned: newAssigned, available: newAvailable })
+        this.props.setState({assigned: newAssigned, available: newAvailable })
          
     }
 
     markAsDone(ticket){
-        let newAssigned = this.state.assigned.filter(obj => !(ticket === obj))
-        this.setState({assigned: newAssigned, available: this.state.available})
+        let newAssigned = this.props.state.assigned.filter(obj => !(ticket === obj))
+        this.props.setState({assigned: newAssigned})
     }
 
     renderAvailable(){
-        return this.state.available.map(values => (
-            <div> <b>Name:</b> {values.name} 
-                <ul>
-                    <li> Category: {values.catgeory} </li>
-                    <li> Description: {values.description} </li>
-                    <li> Title: {values.title} </li>
-                    {values.tried.map(answer => 
-                        <li> {answer} </li>
-                    )}
-                </ul>
-                <button onClick={() => this.addTicket(values)}> Add Ticket </button>
-        </div>
-       ))
+        return this.props.state.available.map(values => (
+            <Assigned>
+                <Block> <b>Name:</b> {values.name} 
+                    <ul>
+                        <li> <b>Category:</b> {values.category} </li>
+                        <li> <b>Description:</b> {values.description} </li>
+                        <li> <b>Title:</b> {values.title} </li>
+                        <ul> <b>Tries:</b> 
+                            {values.tried.map(answer => 
+                                <li> {answer} </li>
+                            )}
+                        </ul>
+                    </ul>
+                    <button onClick={() => this.addTicket(values)}> Add Ticket </button>
+                </Block>
+            </Assigned>
+        ))
     }
 
     refreshAvailable(){

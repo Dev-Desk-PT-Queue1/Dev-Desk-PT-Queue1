@@ -39,9 +39,6 @@ class Login extends Component {
       return (
         <div>
           <LoginHeader>
-            <img
-              alt="Lambda Avatar"
-            />
             <h1>Lambda School</h1>
           </LoginHeader>
           <LoginForm onSubmit={this.login} action="" autoComplete="off">
