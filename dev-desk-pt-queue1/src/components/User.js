@@ -8,10 +8,11 @@ class User extends Component {
         this.state = {
             createTicket: false
         }
+        console.log(props);
     }
 
     createTicket(){
-        return <NewTicketForm/>
+        return <NewTicketForm ticketData={this.props}/>
     }
 
     submitTicket(){
