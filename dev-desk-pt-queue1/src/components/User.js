@@ -15,10 +15,6 @@ class User extends Component {
         return <NewTicketForm ticketData={this.props}/>
     }
 
-    submitTicket(){
-
-    }
-
     render() {
         return(
             <div>

@@ -55,11 +55,11 @@ ul{
   width:50%;
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
 }
 
 .sub-header {
-  width: 100%;
+  width: 50%;
   color: white;
 }
 
