@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Assigned } from '../helpers/StyledUser';
 
 class NewTicketFormClass extends React.Component {
     constructor(props) {
@@ -57,6 +58,19 @@ class NewTicketFormClass extends React.Component {
             alert('Fill out Forms');
             return;
         }else{
+            axios.post('https://dev-desk-queue.herokuapp.com/api/tickets',
+                {
+                    title: `${this.state.name}`,
+                    description: `${this.state.description}`,
+                    category: `${this.state.category}`,
+                    resolved: "0",
+                    assigned: "0",
+                    assigned_user: `${this.state.name}`,
+                    tried: "N/A"
+                }
+            )
+            .then(res => console.log(res))
+            .catch(error => console.log(error));
             this.setState({
                 data : {
                     name: '',
@@ -72,23 +86,6 @@ class NewTicketFormClass extends React.Component {
             tickets.push(this.state.data);
             this.props.ticketData.setState({available: tickets});
         }
-        axios.post(`some_api`)
-            .then(res => {
-                console.log('Submitted Succesfully');
-                this.setState({
-                    data : {
-                        name: '',
-                        title: '',
-                        description: '',
-                        tried: [],
-                        category: ''
-                    },
-                    inputArray: []
-                })
-            })
-            .catch(error => {
-                console.log(error);
-            })
     }
 
     render() {
