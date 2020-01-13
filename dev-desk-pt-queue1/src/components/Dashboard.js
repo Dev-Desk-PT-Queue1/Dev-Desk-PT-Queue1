@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import Helper from './Helper';
 import User from './User';
+import Axios from 'axios';
 
 
 class Dashboard extends React.Component {
@@ -98,11 +99,20 @@ class Dashboard extends React.Component {
         }
     }
 
+    axiosCall(){
+        Axios.get('https://dev-desk-queue.herokuapp.com/api/tickets')
+            .then(res =>{
+                console.log(res);
+            })
+            .catch(err => console.log(err))
+    }
+
     render() {
         return (
             <>
                 <button onClick={() => this.setState({user: 'User'})}> Student View </button>
                 <button onClick={() => this.setState({user: 'Helper'})}> Helper View </button>
+                <button onClick={() =>this.axiosCall()} > Get Tickets</button>
                 {this.handleView()}
                 
             </>

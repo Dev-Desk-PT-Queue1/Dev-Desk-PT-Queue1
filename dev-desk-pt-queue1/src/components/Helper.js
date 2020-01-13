@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Assigned, Block} from '../helpers/StyledUser';
 import Axios from 'axios';
+import axiosAuth from '../auth/axiosAuth';
 
 class Helper extends Component {
     constructor(props) {
@@ -8,20 +9,14 @@ class Helper extends Component {
     }
 
     componentDidMount() { //data that will be gotten from the 
-        /*Axios.get(`backendapi.com/assigned?id=${helperiD}`)
-            .then(res =>{
-               this.setState({assinged: res, available: null}); 
+        Axios.get('https://dev-desk-queue.herokuapp.com/api/tickets')
+            .then(res => {
+                let newAvailable = this.props.state.available;
+                res.data.forEach(element => {
+                    newAvailable.push(element);
+                });
+                this.props.setState({available: newAvailable})
             })
-            .catch(err =>{
-                console.log(err);
-            })
-        Axios.get(`backendapi.com/tickets?id=${helperiD}?number=5`)
-            .then(res =>{
-                this.setState({assinged: this.state.assigned, available: res});
-            })
-            .catch(err =>{
-                console.log(err);
-            })*/
     }
 
     renderAssigned(){
@@ -33,7 +28,7 @@ class Helper extends Component {
                         <li> <b>Description:</b> {values.description} </li>
                         <li> <b>Title:</b> {values.title} </li>
                         <ul> <b>Tries:</b> 
-                            {values.tried.map(answer => 
+                            {!Array.isArray(values.tried) ? <> </> : values.tried.map(answer => 
                                 <li> {answer} </li>
                             )}
                         </ul>
@@ -66,7 +61,7 @@ class Helper extends Component {
                         <li> <b>Description:</b> {values.description} </li>
                         <li> <b>Title:</b> {values.title} </li>
                         <ul> <b>Tries:</b> 
-                            {values.tried.map(answer => 
+                            {!Array.isArray(values.tried) ? <> </> : values.tried.map(answer => 
                                 <li> {answer} </li>
                             )}
                         </ul>
@@ -89,7 +84,7 @@ class Helper extends Component {
 
     render() {
         return (
-            <>
+            <>  
                 <div className="tickets">
                     <div className="assignedTickets">
                         {this.renderAssigned()}
